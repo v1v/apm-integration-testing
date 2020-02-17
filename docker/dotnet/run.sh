@@ -17,6 +17,8 @@ if [ -z "${DOTNET_AGENT_VERSION}" ] ; then
 
   ### Otherwise: /usr/share/dotnet/sdk/2.2.203/NuGet.targets(119,5): error : The local source '/src/local-packages' doesn't exist. [/src/dotnet-agent/ElasticApmAgent.sln]
   mkdir /src/local-packages
+
+
   dotnet restore
   dotnet pack -c Release -o /src/local-packages
 
@@ -28,7 +30,7 @@ if [ -z "${DOTNET_AGENT_VERSION}" ] ; then
   if [ -z "${DOTNET_AGENT_VERSION}" ] ; then
     echo 'INFO: search version in the csproj. (only for agent version < 1.3)'
     DOTNET_AGENT_VERSION=$(grep 'PackageVersion' ${CSPROJ_VERSION} | sed 's#<.*>\(.*\)<.*>#\1#' | tr -d " ")
-    if [ -z "${DOTNET_AGENT_VERSION}" ] ; then
+    if [ -z ${DOTNET_AGENT_VERSION} ] ; then
       echo 'ERROR: DOTNET_AGENT_VERSION could not be calculated.' && exit 1
     fi
   fi
